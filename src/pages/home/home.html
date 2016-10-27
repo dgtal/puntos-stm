@@ -1,0 +1,23 @@
+<ion-header no-shadow>
+  <ion-navbar>
+    <ion-buttons start *ngIf="this.points?.length">
+      <button ion-button icon-only (click)="showList()">
+        <ion-icon name="ios-list-box-outline"></ion-icon>
+      </button>
+    </ion-buttons>
+
+    <ion-title>
+      Puntos STM
+    </ion-title>
+
+    <ion-buttons end>
+      <button ion-button icon-only (click)="refreshLocation()">
+        <ion-icon name="ios-locate-outline"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content fullscreen="true">
+	<div id="map"></div>
+</ion-content>

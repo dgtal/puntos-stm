@@ -1,0 +1,97 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Punto STM
+    </ion-title>
+    <ion-buttons start>
+      <button ion-button (click)="dismiss()">
+        <span color="primary" showWhen="ios">Cerrar</span>
+        <ion-icon name="md-close" showWhen="android,windows"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+      <ion-item text-wrap>
+        <ion-avatar item-left>
+          <img *ngIf="spot?.type==1" src="assets/markers/64x64/map-marker-icon-red.png">
+          <img *ngIf="spot?.type==2" src="assets/markers/64x64/map-marker-icon-blue.png">
+          <img *ngIf="spot?.type!=1 && spot?.type!=2" src="assets/markers/64x64/map-marker-icon-green.png">
+        </ion-avatar>
+        <h2>{{ spot?.name }}</h2>
+        <p>{{ spot?.address }}</p>
+      </ion-item>
+
+      <ion-item text-wrap *ngIf="spot?.hours">
+        <ion-icon name="ios-clock-outline" item-left large></ion-icon>
+        <h2>Horario</h2>
+        <p>{{ spot?.hours }}</p>
+      </ion-item>
+
+      <ion-item text-wrap>
+        <ion-icon name="ios-call-outline" item-left large></ion-icon>
+        <h2>Teléfono</h2>
+        <ion-note item-right>
+          {{ spot?.phone }}
+        </ion-note>
+      </ion-item>
+
+      <ion-item no-lines *ngIf="spot?.distance">
+        <ion-icon name="ios-walk-outline" item-left large></ion-icon>
+        <h2>Distancia</h2>
+        <ion-note item-right>
+          {{ spot?.distance | distance }} m
+        </ion-note>
+      </ion-item>
+
+      <ion-item-divider *ngIf="spot?.type == 1">
+        Atención Integral STM
+      </ion-item-divider>
+      <ion-item text-wrap *ngIf="spot?.type == 1">
+        <p>Recarga todas las tarjetas</p>
+        <p>Emite todas las tarjetas STM con FOTO</p>
+        <p>Entrega la tarjeta STM Común</p>
+        <p>Consulta de saldos</p>
+        <p>Denuncia y reemplaza todas las tarjetas</p>
+        <p>Recupera saldos de tarjetas dañadas o extraviadas</p>
+      </ion-item>
+
+      <ion-item-divider *ngIf="spot?.type == 2">
+        Recarga y entrega de tarj. STM COMÚN
+      </ion-item-divider>
+      <ion-item text-wrap *ngIf="spot?.type == 2">
+        <p>Recarga todas las tarjetas (excepto GESTIÓN SOCIAL)</p>
+        <p>Entrega la tarjeta STM Común</p>
+        <p>Consulta de saldos</p>
+        <p>Denuncia de todas las tarjetas</p>
+        <p>Recupera saldos de tarjetas dañadas o extraviadas</p>
+      </ion-item>
+
+      <ion-item-divider *ngIf="spot?.type == 3">
+        Recarga
+      </ion-item-divider>
+      <ion-item text-wrap *ngIf="spot?.type == 3">
+        <p>Recarga de tarjetas: STM Común, Jubilados y Estudiantes A y B</p>
+        <p>Consulta de saldos</p>
+        <p>Recupera saldos de tarjetas dañadas o extraviadas</p>
+      </ion-item>
+
+      <ion-item-divider *ngIf="spot?.type == 4">
+        Solicitud de POSPAGO
+      </ion-item-divider>
+      <ion-item text-wrap *ngIf="spot?.type == 4">
+        <p>Asocia la tarjeta STM a una tarjeta de crédito</p>
+      </ion-item>
+
+      <ion-item-divider *ngIf="spot?.type == 5">
+        Atención de reclamos por problemas con la tarjeta
+      </ion-item-divider>
+      <ion-item text-wrap *ngIf="spot?.type == 5">
+        <p>Intendencia de Montevideo - UPTU</p>
+        <p>Planta Baja - Sector Santiago De Chile</p>
+        <p>Puerta 053</p>
+      </ion-item>
+  </ion-list>
+</ion-content>

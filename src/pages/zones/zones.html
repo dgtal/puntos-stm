@@ -1,0 +1,20 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Zonas
+    </ion-title>
+  </ion-navbar>
+  <ion-searchbar
+    (ionInput)="searchZone($event)" 
+    (ionClear)="clearSearchZone($event)"
+    placeholder="Buscar"></ion-searchbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <button full ion-item *ngFor="let zone of filteredZones" (click)="showSpotsByZone(zone)">
+      {{ zone.name }}
+      <ion-badge item-right color="primary">{{ zone.spots }}</ion-badge>
+    </button>
+  </ion-list>
+</ion-content>

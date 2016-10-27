@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title *ngIf="zone">
+      {{ zone.name }}
+    </ion-title>
+    <ion-title *ngIf="!zone">
+      Puntos STM
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <button full ion-item *ngFor="let point of points" (click)="showSpotInfo(point)">
+      <ion-avatar item-left>
+        <img *ngIf="point?.type==1" src="assets/markers/64x64/map-marker-icon-red.png">
+        <img *ngIf="point?.type==2" src="assets/markers/64x64/map-marker-icon-blue.png">
+        <img *ngIf="point?.type!=1 && spot?.type!=2" src="assets/markers/64x64/map-marker-icon-green.png">
+      </ion-avatar>
+      <h2>{{ point.name }}</h2>
+      <p>{{ point.address }}</p>
+    </button>
+  </ion-list>
+</ion-content>
