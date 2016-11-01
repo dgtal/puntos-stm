@@ -35,6 +35,10 @@ export class AboutPage {
     });
   }
 
+  ngOnDestroy() {
+    console.log('about -> ngOnDestroy');
+  }
+
   loadPointsByGeolocation() {
     Geolocation.getCurrentPosition().then((resp) => {
       this.fetchPoints(resp.coords.latitude, resp.coords.longitude);

@@ -7,8 +7,8 @@ import { HomePage } from '../pages/home/home';
 import { SpotInfoPage } from '../pages/spot-info/spot-info';
 import { ZonesPage } from '../pages/zones/zones';
 import { TabsPage } from '../pages/tabs/tabs';
-import { PointsOfInterest } from '../providers/points-of-interest'
-import { Zones } from '../providers/zones'
+import { PointsOfInterest } from '../providers/points-of-interest';
+import { Zones } from '../providers/zones';
 import { DistancePipe } from '../pipes/distance_pipe';
 
 @NgModule({
@@ -24,7 +24,11 @@ import { DistancePipe } from '../pipes/distance_pipe';
   ],
   imports: [
     IonicModule.forRoot(MyApp, {
-      backButtonText: 'Volver'
+      backButtonText: '',
+      tabsHideOnSubPages: true
+      // modalEnter: 'modal-slide-in',
+      // modalLeave: 'modal-slide-out',
+      // pageTransition: 'ios'
     })
   ],
   bootstrap: [IonicApp],

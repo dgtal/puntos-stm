@@ -15,7 +15,7 @@ export class PointsOfInterest {
   fetchPoints(latitude?:number, longitude?:number, radio?:number) {
     console.log('FetchPoints()');
 
-    let url = 'http://dgtal.info/stm/index.php';
+    let url = 'http://stm.mobilehandcrafts.com/';
 
     let params = new URLSearchParams();
 
@@ -41,7 +41,7 @@ export class PointsOfInterest {
   fetchPointsByZone(zone:any) {
     console.log('fetchPointsByZone()');
 
-    let url = 'http://dgtal.info/stm/index.php';
+    let url = 'http://stm.mobilehandcrafts.com/';
 
     let params = new URLSearchParams();
 

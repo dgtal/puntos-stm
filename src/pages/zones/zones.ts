@@ -23,6 +23,14 @@ export class ZonesPage {
     });
   }
 
+  ngOnInit() {
+    console.log('zones -> ngOnInit');
+  }
+
+  ngOnDestroy() {
+    console.log('zones -> ngOnDestroy');
+  }
+
   private fetchZones() {
     this.zonesService.fetchZones().subscribe(
       data => {

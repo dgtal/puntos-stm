@@ -12,7 +12,7 @@ export class Zones {
   }
 
   fetchZones() {
-    let url = 'http://dgtal.info/stm/zones.php';
+    let url = 'http://stm.mobilehandcrafts.com/zones.php';
 
     return this.http.get(url)
         .map(res => res.json())

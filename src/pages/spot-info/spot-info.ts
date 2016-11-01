@@ -15,6 +15,10 @@ export class SpotInfoPage {
     this.spot = this.navParams.get('spot');
   }
 
+  ngOnDestroy() {
+    console.log('spot info -> ngOnDestroy');
+  }
+
   ionViewDidLoad() {
     console.log('Hello SpotInfo Page');
   }

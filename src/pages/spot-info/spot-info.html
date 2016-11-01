@@ -38,11 +38,11 @@
         </ion-note>
       </ion-item>
 
-      <ion-item no-lines *ngIf="spot?.distance">
+      <ion-item text-wrap no-lines *ngIf="spot?.distance">
         <ion-icon name="ios-walk-outline" item-left large></ion-icon>
         <h2>Distancia</h2>
         <ion-note item-right>
-          {{ spot?.distance | distance }} m
+          {{ spot?.distance | distance }}m
         </ion-note>
       </ion-item>
 

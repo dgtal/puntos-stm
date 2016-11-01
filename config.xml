@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<widget id="com.dgtal.puntosstm" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.dgtal.puntosstm" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
   <name>Puntos STM</name>
   <description/>
-  <author email="hi@ionicframework" href="http://ionicframework.com/">Ionic Framework Team</author>
+  <author email="puntos.stm@gmail.com" href="http://dgtal.info">DGtal Labs</author>
   <content src="index.html"/>
   <access origin="*"/>
   <allow-intent href="http://*/*"/>
@@ -74,8 +74,8 @@
   <preference name="SplashScreenDelay" value="0"/>
   <preference name="FadeSplashScreen" value="false"/>
   <preference name="FadeSplashScreenDuration" value="0"/>
-  <preference name="SplashScreenBackgroundColor" value="0xFFFFFFFF"/>
-  <preference name="SplashScreen" value="screen"/>
+  <preference name="SplashScreenBackgroundColor" value="0xb0daff"/>
+  <preference name="SplashScreen" value="true"/>
   <feature name="StatusBar">
     <param name="ios-package" onload="true" value="CDVStatusBar"/>
   </feature>

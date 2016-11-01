@@ -11,7 +11,7 @@
 
 <ion-content>
   <ion-list>
-    <button full ion-item *ngFor="let point of points" (click)="showSpotInfo(point)">
+    <button  ion-item *ngFor="let point of points" (click)="showSpotInfo(point)">
       <ion-avatar item-left>
         <img *ngIf="point?.type==1" src="assets/markers/64x64/map-marker-icon-red.png">
         <img *ngIf="point?.type==2" src="assets/markers/64x64/map-marker-icon-blue.png">

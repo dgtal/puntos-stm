@@ -1,6 +1,10 @@
 import { Component } from '@angular/core';
-import { NavController, Platform, LoadingController, ToastController, AlertController } from 'ionic-angular';
-import { GoogleMap, GoogleMapsEvent, GoogleMapsLatLng, GoogleMapsMarker, GoogleMapsAnimation, Geolocation, SpinnerDialog } from 'ionic-native'
+import {
+  NavController, Platform, LoadingController,
+  ToastController, AlertController } from 'ionic-angular';
+import {
+  Diagnostic, GoogleMap, GoogleMapsEvent, GoogleMapsLatLng,
+  GoogleMapsMarker, GoogleMapsAnimation, Geolocation, SpinnerDialog } from 'ionic-native'
 import { PointsOfInterest } from '../../providers/points-of-interest'
 import { AboutPage } from '../about/about'
 import { ModalController } from 'ionic-angular';
@@ -15,6 +19,9 @@ export class HomePage {
   points: any;
   utm: any;
   currentPositionMarker: GoogleMapsLatLng;
+  defaultLocation:GoogleMapsLatLng = new GoogleMapsLatLng(-34.88593092938246,-56.24999999711068);
+  isLocationEnabled: boolean = false;
+  isLocationAuthorized: boolean = false;
 
   constructor(
     public navCtrl: NavController, 
@@ -27,13 +34,16 @@ export class HomePage {
     ) {
 
     platform.ready().then(() => {
-        SpinnerDialog.show(null, 'Aguarde...')
-        this.loadMap();
+      this.loadMap();
     });
   }
 
+  ngOnDestroy() {
+    console.log('home -> ngOnDestroy');
+  }
+
   loadMap() {
-    let location = new GoogleMapsLatLng(-34.88593092938246,-56.24999999711068);
+    SpinnerDialog.show(null, 'Aguarde...')
 
     this.map = new GoogleMap('map', {
       'backgroundColor': 'white',
@@ -50,7 +60,7 @@ export class HomePage {
         'zoom': true
       },
       'camera': {
-        'latLng': location,
+        'latLng': this.defaultLocation,
         'tilt': 0,
         'zoom': 16,
         'bearing': 50
@@ -74,6 +84,7 @@ export class HomePage {
 
   private fetchPoints(latitude?:number, longitude?:number, radio:number=1) {
     console.log('fetchPoints()');
+    
     this.pointOfInterestService.fetchPoints(latitude, longitude, radio).subscribe(
       data => {
         this.points = data;
@@ -131,7 +142,7 @@ export class HomePage {
         "title": point.name,
         // icon: iconColor
         "icon": {
-          'url': 'assets/markers/64x64/map-marker-icon-' + iconColor + '.png',
+          'url': 'www/assets/markers/64x64/map-marker-icon-' + iconColor + '.png',
           'size': {
             'width': 48,
             'height': 48
@@ -151,22 +162,68 @@ export class HomePage {
       "animation": GoogleMapsAnimation.DROP
     });
 
-    SpinnerDialog.hide()
+    SpinnerDialog.hide();
   }
 
   private getCurrentPosition() {
     console.log('getCurrentPosition()');
 
-    Geolocation.getCurrentPosition().then((resp) => {
-      this.currentPositionMarker = null;
+    Diagnostic.isLocationEnabled()
+    .then(
+      (state) => {
+        this.isLocationEnabled = state;
 
-      this.latLng = new GoogleMapsLatLng(resp.coords.latitude, resp.coords.longitude);
-      this.map.setCenter(this.latLng);
-      console.log(resp.coords.latitude + ', ' + resp.coords.longitude);
-      this.fetchPoints(resp.coords.latitude, resp.coords.longitude, 1);
-    }, err => {
-      console.log(err)
-    });
+        if (state) {
+          Diagnostic.isLocationAuthorized().then((authorized) => {
+            this.isLocationAuthorized = authorized;
+
+            if (authorized) {
+              Geolocation.getCurrentPosition({'timeout': 10000}).then((resp) => {
+                this.currentPositionMarker = null;
+
+                this.latLng = new GoogleMapsLatLng(resp.coords.latitude, resp.coords.longitude);
+                this.map.setCenter(this.latLng);
+                console.log(resp.coords.latitude + ', ' + resp.coords.longitude);
+                this.fetchPoints(resp.coords.latitude, resp.coords.longitude, 1);
+              }, err => {
+                SpinnerDialog.hide();
+
+                alert(err.message);
+                // console.log(err)
+              });
+            } else {
+              SpinnerDialog.hide();
+              this.showLocationAlert();
+            }
+          })
+        }
+        else {
+          SpinnerDialog.hide();
+          this.showLocationAlert();
+        }
+      },
+      (error) => {
+        alert(error);
+      });
+  }
+
+  showLocationAlert() {
+    this.map.setClickable(false);
+
+    let alert = this.alertCtrl.create({
+      title: 'Ubicación inactiva',
+      subTitle: 'Activa la detección de ubicación para buscar los puntos cercanos.',
+      buttons: [
+              {
+                text: 'Aceptar',
+                handler: () => {
+                  this.map.setClickable(true);
+                }
+              }
+      ]
+    });                                    
+
+    alert.present();
   }
 
   presentConfirm(latitude:number, longitude:number) {
@@ -204,7 +261,9 @@ export class HomePage {
 
   refreshLocation() {
     console.log('refreshLocation()');
+
     SpinnerDialog.show(null, 'Buscando...')
+
     this.getCurrentPosition();
   }
 }
